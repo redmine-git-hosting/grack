@@ -57,7 +57,7 @@ module Grack
     end
 
     def valid_repo?
-      return false unless File.exists?(repo) && File.realpath(repo) == repo
+      return false unless File.exist?(repo) && File.realpath(repo) == repo
 
       match = execute(%W(rev-parse --git-dir)).match(/\.$|\.git$/)
       

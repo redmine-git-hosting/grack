@@ -163,7 +163,7 @@ module Grack
     # some of this borrowed from the Rack::File implementation
     def send_file(reqfile, content_type)
       reqfile = File.join(git.repo, reqfile)
-      return render_not_found unless File.exists?(reqfile)
+      return render_not_found unless File.exist?(reqfile)
 
       return render_not_found unless reqfile == File.realpath(reqfile)
 
