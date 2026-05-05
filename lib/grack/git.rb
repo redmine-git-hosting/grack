@@ -42,7 +42,11 @@ module Grack
     end
 
     def config_setting(service_name)
-      service_name = service_name.gsub('-', '')
+      service_name = service_name.to_s.gsub('-', '')
+      unless %w[uploadpack receivepack].include?(service_name)
+        raise ArgumentError, "Unsupported service name: #{service_name}"
+      end
+
       setting = config("http.#{service_name}")
 
       if service_name == 'uploadpack'
@@ -53,6 +57,11 @@ module Grack
     end
 
     def config(config_name)
+      config_name = config_name.to_s
+      unless /\Ahttp\.(uploadpack|receivepack)\z/.match?(config_name)
+        raise ArgumentError, "Unsupported config name: #{config_name}"
+      end
+
       execute(%W(config #{config_name}))
     end
 
